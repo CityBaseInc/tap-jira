@@ -171,6 +171,8 @@ class Users(Stream):
             except requests.exceptions.HTTPError as http_error:
                 if http_error.response.status_code == 404:
                     LOGGER.info("Could not find group \"%s\", skipping", group)
+                elif http_error.response.status_code == 403:
+                    LOGGER.warning("Insufficient permissions for group \"%s\", skipping", group)
                 else:
                     raise http_error
 
